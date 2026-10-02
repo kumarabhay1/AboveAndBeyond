@@ -1,0 +1,26 @@
+import React from "react";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { ServicesSection } from "@/components/sections/ServicesSection";
+import { AddOnServicesSection } from "@/components/sections/AddOnServicesSection";
+import { ProcessSection } from "@/components/sections/ProcessSection";
+import { MobileHighlightSection } from "@/components/sections/MobileHighlightSection";
+import { ServiceAreaSection } from "@/components/sections/ServiceAreaSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { FAQSection } from "@/components/sections/FAQSection";
+import { CTASection } from "@/components/sections/CTASection";
+
+export default function HomePage() {
+  return (
+    <>
+      <HeroSection />
+      <ServicesSection />
+      <AddOnServicesSection />
+      <ProcessSection />
+      <MobileHighlightSection />
+      <ServiceAreaSection />
+      <TestimonialsSection />
+      <FAQSection />
+      <CTASection />
+    </>
+  );
+}
