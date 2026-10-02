@@ -16,7 +16,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-[#09090b] border-t border-white/10 text-zinc-400 text-sm relative overflow-hidden">
+    <footer className="bg-card border-t border-border text-muted-foreground text-sm relative overflow-hidden">
       {/* Background Subtle Orange Aura */}
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ff5500]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -36,7 +36,7 @@ export function Footer() {
               </div>
             </Link>
 
-            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
               {siteConfig.description}
             </p>
 
@@ -45,7 +45,7 @@ export function Footer() {
                 href={siteConfig.socials.instagram}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:bg-[#ff5500]/20 hover:border-[#ff5500] hover:text-[#ff5500] text-zinc-300 flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-xl bg-secondary border border-border hover:bg-[#ff5500]/20 hover:border-[#ff5500] hover:text-[#ff5500] text-muted-foreground flex items-center justify-center transition-all cursor-pointer"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
@@ -54,7 +54,7 @@ export function Footer() {
                 href={siteConfig.socials.facebook}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:bg-[#ff5500]/20 hover:border-[#ff5500] hover:text-[#ff5500] text-zinc-300 flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-xl bg-secondary border border-border hover:bg-[#ff5500]/20 hover:border-[#ff5500] hover:text-[#ff5500] text-muted-foreground flex items-center justify-center transition-all cursor-pointer"
                 aria-label="Facebook"
               >
                 <Facebook className="w-4 h-4" />
@@ -63,21 +63,21 @@ export function Footer() {
                 href={siteConfig.getWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:bg-emerald-500/20 hover:border-emerald-500 hover:text-emerald-400 text-zinc-300 flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-xl bg-secondary border border-border hover:bg-emerald-500/20 hover:border-emerald-500 hover:text-emerald-500 text-muted-foreground flex items-center justify-center transition-all cursor-pointer"
                 aria-label="WhatsApp"
               >
                 <MessageSquare className="w-4 h-4" />
               </a>
             </div>
 
-            <div className="pt-2 text-xs text-zinc-500">
-              Owned & Operated by <span className="text-zinc-300 font-bold">{siteConfig.owner}</span>
+            <div className="pt-2 text-xs text-muted-foreground">
+              Owned & Operated by <span className="text-foreground font-bold">{siteConfig.owner}</span>
             </div>
           </div>
 
           {/* Col 2: Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-white font-outfit font-bold uppercase tracking-wider text-sm">
+            <h4 className="text-foreground font-outfit font-bold uppercase tracking-wider text-sm">
               Navigation
             </h4>
             <ul className="space-y-2.5">
@@ -121,7 +121,7 @@ export function Footer() {
 
           {/* Col 3: Detailing Services */}
           <div className="space-y-4">
-            <h4 className="text-white font-outfit font-bold uppercase tracking-wider text-sm">
+            <h4 className="text-foreground font-outfit font-bold uppercase tracking-wider text-sm">
               Core Services
             </h4>
             <ul className="space-y-2.5">
@@ -160,19 +160,19 @@ export function Footer() {
 
           {/* Col 4: Contact & Hours */}
           <div className="space-y-4">
-            <h4 className="text-white font-outfit font-bold uppercase tracking-wider text-sm">
+            <h4 className="text-foreground font-outfit font-bold uppercase tracking-wider text-sm">
               Get In Touch
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <Phone className="w-4 h-4 text-[#ff5500] shrink-0 mt-0.5" />
-                <a href={`tel:${siteConfig.phoneRaw}`} className="text-white hover:text-[#ff5500] font-bold transition-colors">
+                <a href={`tel:${siteConfig.phoneRaw}`} className="text-foreground hover:text-[#ff5500] font-bold transition-colors">
                   {siteConfig.phone}
                 </a>
               </li>
               <li className="flex items-start space-x-3">
                 <Mail className="w-4 h-4 text-[#ff5500] shrink-0 mt-0.5" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-white transition-colors break-all">
+                <a href={`mailto:${siteConfig.email}`} className="hover:text-foreground transition-colors break-all">
                   {siteConfig.email}
                 </a>
               </li>
@@ -184,8 +184,8 @@ export function Footer() {
                 <Clock className="w-4 h-4 text-[#ff5500] shrink-0 mt-0.5" />
                 <div className="text-xs space-y-1">
                   {siteConfig.hours.map((h, i) => (
-                    <div key={i} className="text-zinc-300">
-                      <span className="font-semibold">{h.days}:</span> {h.time}
+                    <div key={i} className="text-muted-foreground">
+                      <span className="font-semibold text-foreground">{h.days}:</span> {h.time}
                     </div>
                   ))}
                 </div>
@@ -196,15 +196,15 @@ export function Footer() {
         </div>
 
         {/* Bottom Copyright & Legal */}
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+        <div className="mt-14 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <div>
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved. Quality That Shows.
           </div>
           <div className="flex items-center space-x-6">
-            <Link href="/privacy" className="hover:text-zinc-300 transition-colors">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-zinc-300 transition-colors">
+            <Link href="/terms" className="hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>

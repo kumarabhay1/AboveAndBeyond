@@ -63,12 +63,12 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
   };
 
   return (
-    <div className={cn("w-full bg-[#121214] border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl glass-card", className)}>
+    <div className={cn("w-full bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-2xl glass-card text-foreground", className)}>
       {/* Calendar Header */}
-      <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
         <div className="flex items-center space-x-2">
           <CalendarIcon className="w-5 h-5 text-[#ff5500]" />
-          <h3 className="text-lg font-outfit font-bold text-white">
+          <h3 className="text-lg font-outfit font-bold text-foreground">
             {monthNames[month]} <span className="text-[#ff5500]">{year}</span>
           </h3>
         </div>
@@ -76,7 +76,7 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
           <button
             type="button"
             onClick={prevMonth}
-            className="p-2 rounded-xl bg-white/5 hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-zinc-300 transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-secondary hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-muted-foreground transition-colors cursor-pointer"
             aria-label="Previous Month"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -84,7 +84,7 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
           <button
             type="button"
             onClick={nextMonth}
-            className="p-2 rounded-xl bg-white/5 hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-zinc-300 transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-secondary hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-muted-foreground transition-colors cursor-pointer"
             aria-label="Next Month"
           >
             <ChevronRight className="w-4 h-4" />
@@ -95,7 +95,7 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
       {/* Weekday Labels */}
       <div className="grid grid-cols-7 gap-1 text-center mb-2">
         {daysOfWeek.map((day, idx) => (
-          <div key={idx} className="text-xs font-semibold uppercase text-zinc-400 py-1">
+          <div key={idx} className="text-xs font-semibold uppercase text-muted-foreground py-1">
             {day}
           </div>
         ))}
@@ -127,9 +127,9 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
               onClick={() => handleDateClick(day)}
               className={cn(
                 "h-9 sm:h-10 rounded-xl font-medium text-sm transition-all duration-200 flex flex-col items-center justify-center relative cursor-pointer",
-                isPast && "text-zinc-600 opacity-40 cursor-not-allowed bg-transparent",
-                !isPast && !isSelected && "text-zinc-200 hover:bg-[#ff5500]/15 hover:text-white bg-white/5 border border-white/5",
-                isToday && !isSelected && "border-2 border-[#ff5500]/60 text-white font-bold",
+                isPast && "text-muted-foreground/40 opacity-40 cursor-not-allowed bg-transparent",
+                !isPast && !isSelected && "text-foreground hover:bg-[#ff5500]/15 hover:text-[#ff5500] bg-secondary/70 dark:bg-white/5 border border-border",
+                isToday && !isSelected && "border-2 border-[#ff5500]/80 text-foreground font-bold",
                 isSelected && "bg-gradient-to-r from-[#ff5500] to-[#ff7700] text-white font-extrabold shadow-lg shadow-[#ff5500]/30 scale-105"
               )}
             >
@@ -141,7 +141,7 @@ export function CustomCalendar({ selectedDate, onSelectDate, className }: Custom
           );
         })}
       </div>
-      <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-zinc-400">
+      <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full border-2 border-[#ff5500]/80 inline-block" /> Today
         </span>

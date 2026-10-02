@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/data/site";
 import { assetsData } from "@/data/assets";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { ServiceAreaMap } from "@/components/ui/ServiceAreaMap";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { SectionAtmosphere } from "@/components/ui/section-atmosphere";
 import { 
@@ -149,7 +150,7 @@ export default function ContactPage() {
                     <div>
                       <div className="text-[11px] text-muted-foreground font-bold uppercase tracking-wider">Operating Hours</div>
                       <div className="text-xs font-bold text-foreground">
-                        7 Days a Week (6:00 AM - 9:00 PM)
+                        7 Days a Week (7:00 AM - 8:00 PM)
                       </div>
                     </div>
                   </div>
@@ -170,6 +171,24 @@ export default function ContactPage() {
             </div>
 
           </div>
+
+          {/* Service Area & Coverage Map Section */}
+          <div className="mt-16">
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-1">
+                Where We Detail
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-display font-extrabold uppercase text-foreground">
+                Mobile Service <span className="text-primary">Coverage Map</span>
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                Serving Riverside, Moreno Valley, Fontana, San Bernardino, Victorville, Chino, Rancho Cucamonga, Ontario, Orange, Yorba Linda, Santa Ana, Los Angeles, Santa Monica, & surrounding areas.
+              </p>
+            </div>
+
+            <ServiceAreaMap />
+          </div>
+
         </div>
       </section>
 

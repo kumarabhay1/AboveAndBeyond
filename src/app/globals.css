@@ -187,13 +187,32 @@ h6 {
   }
 
   .text-gradient-silver {
+    background: linear-gradient(135deg, #18181b 0%, #475569 50%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-gradient-silver {
     background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 
   .text-gradient-primary,
   .text-gradient-orange {
+    background: linear-gradient(135deg, #ff5500 0%, #ff7733 50%, #e04400 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-gradient-primary,
+  .dark .text-gradient-orange {
     background: linear-gradient(135deg, #ffffff 0%, #ff8542 45%, #ff5500 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

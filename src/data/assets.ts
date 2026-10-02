@@ -1,5 +1,5 @@
 export const assetsData = {
-  heroBgImage: "/images/services/full-vehicle-detail.webp",
+  heroBgImage: "/images/hero-banner.webp",
   heroVideo: "https://assets.mixkit.co/videos/preview/mixkit-washing-a-luxurious-black-car-41527-large.mp4",
   mobileVanImage: "/images/services/full-exterior-detail.webp",
   ceramicCoatingBg: "/images/services/ceramic-coating.webp",

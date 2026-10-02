@@ -52,7 +52,7 @@ export function BeforeAfter({
       onMouseLeave={() => setIsDragging(false)}
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
-      className="relative w-full h-[400px] sm:h-[500px] rounded-3xl overflow-hidden select-none border border-white/10 glass-card shadow-2xl cursor-ew-resize group"
+      className="relative w-full h-[400px] sm:h-[500px] rounded-3xl overflow-hidden select-none border border-border glass-card shadow-2xl cursor-ew-resize group"
     >
       {/* AFTER Image (Full Layer) */}
       <div className="absolute inset-0 w-full h-full">
@@ -81,7 +81,7 @@ export function BeforeAfter({
           fill
           className="object-cover filter brightness-90 contrast-90"
         />
-        <span className="absolute top-4 left-4 text-xs font-extrabold uppercase px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/20 text-zinc-300 backdrop-blur-md shadow-lg z-10">
+        <span className="absolute top-4 left-4 text-xs font-extrabold uppercase px-3.5 py-1.5 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-md shadow-lg z-10">
           {beforeLabel}
         </span>
       </div>
@@ -92,7 +92,7 @@ export function BeforeAfter({
         style={{ left: `${sliderPosition}%` }}
       >
         {/* Floating Grab Button */}
-        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-[#121214] border-2 border-[#ff5500] text-[#ff5500] flex items-center justify-center shadow-xl shadow-[#ff5500]/40 group-hover:scale-110 transition-transform">
+        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-card border-2 border-[#ff5500] text-[#ff5500] flex items-center justify-center shadow-xl shadow-[#ff5500]/40 group-hover:scale-110 transition-transform">
           <MoveHorizontal className="w-5 h-5" />
         </div>
       </div>

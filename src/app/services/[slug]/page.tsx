@@ -167,33 +167,27 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
                 </div>
               </div>
 
-              {/* Vehicle Size Price Guide */}
+              {/* Vehicle Categories Serviced */}
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="text-xl sm:text-2xl font-display font-bold uppercase text-foreground">
-                      Vehicle Size <span className="text-primary">Pricing Guide</span>
+                      Vehicles We <span className="text-primary">Service</span>
                     </h3>
                     <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-                      Pricing scales based on vehicle surface area, cabin volume, and time required.
+                      Pricing scales based on vehicle surface area, cabin volume, and condition.
                     </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {vehicleCategories.slice(0, 4).map((vc) => {
-                    const estimatedPrice = Math.round(service.startingPrice * vc.multiplier);
-                    return (
-                      <div key={vc.id} className="p-4 rounded-2xl bg-card border border-border text-center">
-                        <Car className="w-5 h-5 text-primary mx-auto mb-2" />
-                        <div className="font-outfit font-bold text-sm text-foreground">{vc.name}</div>
-                        <div className="text-xs text-muted-foreground mt-0.5">{vc.description}</div>
-                        <div className="mt-3 text-xl font-display font-extrabold text-primary">
-                          ${estimatedPrice}
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {vehicleCategories.map((vc) => (
+                    <div key={vc.id} className="p-4 rounded-2xl bg-card border border-border text-center">
+                      <Car className="w-5 h-5 text-primary mx-auto mb-2" />
+                      <div className="font-outfit font-bold text-sm text-foreground">{vc.name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{vc.description}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -248,7 +242,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-primary shrink-0" />
-                    <span>Available 7 Days (6:00 AM - 9:00 PM)</span>
+                    <span>Available 7 Days (7:00 AM - 8:00 PM)</span>
                   </div>
                 </div>
 

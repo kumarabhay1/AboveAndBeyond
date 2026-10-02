@@ -16,7 +16,7 @@ export const siteConfig = {
     country: "USA",
   },
   hours: [
-    { days: "Monday - Sunday (7 Days a Week)", time: "6:00 AM - 9:00 PM" },
+    { days: "Monday - Sunday (7 Days a Week)", time: "7:00 AM - 8:00 PM" },
   ],
   socials: {
     instagram: "https://www.instagram.com/aboveandbeyond_detailz?stkn=N2hkN2Z2NHJ6MzZm&utm_source=qr",

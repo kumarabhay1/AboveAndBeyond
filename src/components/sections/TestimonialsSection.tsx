@@ -21,7 +21,7 @@ export function TestimonialsSection() {
   const activeReview = testimonialsData[currentIndex];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#09090b] relative border-t border-b border-white/5 overflow-hidden">
+    <section className="py-20 lg:py-28 bg-background relative border-t border-b border-border overflow-hidden">
       <SectionAtmosphere />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -37,16 +37,16 @@ export function TestimonialsSection() {
               Verified Customer Reviews
             </span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold uppercase text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold uppercase text-foreground tracking-tight">
             WHAT OUR <span className="text-gradient-orange">CLIENTS SAY</span>
           </h2>
-          <p className="mt-3 text-zinc-400 text-base">
+          <p className="mt-3 text-muted-foreground text-base">
             Trusted by luxury car owners, busy families, and auto collectors across the Inland Empire & Southern California.
           </p>
         </div>
 
         {/* Testimonial Spotlight Slider */}
-        <div className="max-w-4xl mx-auto bg-[#121214] border border-white/10 rounded-3xl p-8 sm:p-12 glass-card relative shadow-2xl">
+        <div className="max-w-4xl mx-auto bg-card border border-border rounded-3xl p-8 sm:p-12 glass-card relative shadow-2xl">
           
           <Quote className="w-16 h-16 text-[#ff5500]/15 absolute top-6 right-6 pointer-events-none" />
 
@@ -56,15 +56,15 @@ export function TestimonialsSection() {
             ))}
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-outfit font-bold text-white mb-4">
+          <h3 className="text-xl sm:text-2xl font-outfit font-bold text-foreground mb-4">
             "{activeReview.title}"
           </h3>
 
-          <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-8 italic">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-8 italic">
             "{activeReview.comment}"
           </p>
 
-          <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="pt-6 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
               {activeReview.avatar && (
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#ff5500]/60 shrink-0">
@@ -77,32 +77,32 @@ export function TestimonialsSection() {
                 </div>
               )}
               <div>
-                <div className="font-outfit font-bold text-base text-white flex items-center gap-1.5">
+                <div className="font-outfit font-bold text-base text-foreground flex items-center gap-1.5">
                   <span>{activeReview.name}</span>
                   <CheckCircle2 className="w-4 h-4 text-[#ff5500]" />
                 </div>
-                <div className="text-xs text-zinc-400">
-                  {activeReview.vehicle} • <span className="text-zinc-500">{activeReview.location}</span>
+                <div className="text-xs text-muted-foreground">
+                  {activeReview.vehicle} • <span className="text-muted-foreground/80">{activeReview.location}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center justify-between sm:justify-end space-x-4">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#ff5500]">
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-secondary border border-border text-[#ff5500]">
                 {activeReview.serviceUsed}
               </span>
 
               <div className="flex items-center space-x-2">
                 <button
                   onClick={prevReview}
-                  className="p-2.5 rounded-xl bg-white/5 hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-zinc-300 border border-white/10 transition-colors cursor-pointer"
+                  className="p-2.5 rounded-xl bg-secondary hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-muted-foreground border border-border transition-colors cursor-pointer"
                   aria-label="Previous Review"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={nextReview}
-                  className="p-2.5 rounded-xl bg-white/5 hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-zinc-300 border border-white/10 transition-colors cursor-pointer"
+                  className="p-2.5 rounded-xl bg-secondary hover:bg-[#ff5500]/20 hover:text-[#ff5500] text-muted-foreground border border-border transition-colors cursor-pointer"
                   aria-label="Next Review"
                 >
                   <ChevronRight className="w-5 h-5" />

@@ -61,6 +61,22 @@ export default function PricingPage() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 md:px-8">
           
+          {/* Important Pricing & Condition Banner */}
+          <div className="mb-12 p-4 sm:p-5 rounded-2xl bg-primary/10 border border-primary/25 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <Shield className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-foreground/90">
+                <span className="font-bold text-primary uppercase block sm:inline sm:mr-1">Transparent Pricing Notice:</span>
+                Prices shown below are base starting rates. Final quotes differ based on vehicle size (<strong className="text-foreground">Sedan, Small SUV, Big SUV, Truck, Semi-Truck, Van, RVs</strong>) and paint/interior condition.
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-card border border-border text-xs text-foreground font-semibold shrink-0">
+              <Clock className="w-3.5 h-3.5 text-primary" />
+              <span>7:00 AM – 8:00 PM (7 Days)</span>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-16">
             
             {/* Exterior Care Card */}

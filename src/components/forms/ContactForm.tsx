@@ -117,11 +117,11 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Expanded time slots matching 6am to 9pm
+  // Expanded time slots matching 7:00 AM to 8:00 PM (7 Days a Week)
   const availableTimeSlots = [
-    "06:30 AM",
-    "08:00 AM",
-    "10:00 AM",
+    "07:00 AM",
+    "08:30 AM",
+    "10:30 AM",
     "12:30 PM",
     "02:30 PM",
     "04:30 PM",
@@ -131,17 +131,15 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
   const currentVehicleObj = vehicleCategories.find(v => v.id === selectedVehicle) || vehicleCategories[0];
   const currentServiceObj = servicesData.find(s => s.id === selectedService) || servicesData[0];
   
-  // Calculate price with multiplier + addons
+  // Base starting price + selected add-ons
   const basePrice = currentServiceObj.startingPrice;
-  const multiplier = currentVehicleObj.multiplier;
-  const calculatedBasePrice = Math.round(basePrice * multiplier);
 
   const addonsTotal = selectedAddons.reduce((sum, id) => {
     const addon = addOnServices.find(a => a.id === id);
     return sum + (addon ? addon.priceNum : 0);
   }, 0);
 
-  const totalEstimatedPrice = calculatedBasePrice + addonsTotal;
+  const totalEstimatedPrice = basePrice + addonsTotal;
 
   const toggleAddon = (addonId: string) => {
     if (selectedAddons.includes(addonId)) {
@@ -195,7 +193,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
   return (
     <div className="w-full relative">
-      <div className="bg-[#121214] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl glass-card relative overflow-hidden">
+      <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl glass-card relative overflow-hidden">
         
         {/* Top Accent Bar */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#ff5500] via-[#ff7700] to-[#ff5500]" />
@@ -208,18 +206,18 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
               Mobile Booking & Quote Request
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white uppercase tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground uppercase tracking-tight">
             Reserve Your <span className="text-[#ff5500]">Detailing Appointment</span>
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-1">
+          <p className="text-muted-foreground text-sm sm:text-base mt-1">
             We bring professional mobile car detailing right to your home, workplace, or preferred location across Southern California.
           </p>
 
           {/* Time Slot Request Disclaimer Banner */}
-          <div className="mt-4 p-3.5 rounded-2xl bg-[#ff5500]/10 border border-[#ff5500]/25 flex items-start space-x-3 text-xs text-zinc-300">
+          <div className="mt-4 p-3.5 rounded-2xl bg-[#ff5500]/10 border border-[#ff5500]/25 flex items-start space-x-3 text-xs text-foreground/85">
             <Info className="w-4 h-4 text-[#ff5500] shrink-0 mt-0.5" />
             <span>
-              <strong className="text-white">Scheduling Note:</strong> The appointment date and time you select is a requested window. Owner <strong className="text-[#ff5500]">Harbaz Hundal</strong> or our dispatch team will contact you to confirm availability or provide an updated slot.
+              <strong className="text-foreground">Scheduling Note:</strong> The appointment date and time you select is a requested window. Owner <strong className="text-[#ff5500]">Harbaz Hundal</strong> or our dispatch team will contact you to confirm availability or provide an updated slot.
             </span>
           </div>
         </div>
@@ -228,7 +226,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
           
           {/* STEP 1: VEHICLE TYPE SELECTOR */}
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-zinc-300 mb-3 flex items-center gap-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
               <Car className="w-4 h-4 text-[#ff5500]" /> 1. Select Vehicle Category
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -241,21 +239,18 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     onClick={() => setSelectedVehicle(cat.id)}
                     className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                       active
-                        ? "bg-[#ff5500]/15 border-[#ff5500] text-white shadow-lg shadow-[#ff5500]/20 scale-[1.02]"
-                        : "bg-white/5 border-white/10 text-zinc-300 hover:border-white/20 hover:bg-white/10"
+                        ? "bg-[#ff5500]/15 border-[#ff5500] text-foreground shadow-lg shadow-[#ff5500]/20 scale-[1.02]"
+                        : "bg-secondary/50 border-border text-foreground/80 hover:border-primary/40 hover:bg-secondary"
                     }`}
                   >
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-[#ff5500]">
-                        {active ? <CheckCircle2 className="w-5 h-5 fill-[#ff5500] text-black" /> : <Car className="w-5 h-5 text-zinc-500" />}
-                      </span>
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-zinc-300">
-                        {cat.multiplier}x
+                        {active ? <CheckCircle2 className="w-5 h-5 fill-[#ff5500] text-white" /> : <Car className="w-5 h-5 text-muted-foreground" />}
                       </span>
                     </div>
                     <div>
-                      <div className="font-outfit font-bold text-sm text-white">{cat.name}</div>
-                      <div className="text-[11px] text-zinc-400 mt-0.5 line-clamp-1">{cat.description}</div>
+                      <div className="font-outfit font-bold text-sm text-foreground">{cat.name}</div>
+                      <div className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">{cat.description}</div>
                     </div>
                   </button>
                 );
@@ -265,21 +260,20 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
           {/* STEP 2: SERVICE PACKAGE CHOICE CARDS */}
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-zinc-300 mb-3 flex items-center gap-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-[#ff5500]" /> 2. Select Main Detailing Package
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {servicesData.map((service) => {
                 const active = selectedService === service.id;
-                const calcPkgPrice = Math.round(service.startingPrice * currentVehicleObj.multiplier);
                 return (
                   <div
                     key={service.id}
                     onClick={() => setSelectedService(service.id)}
                     className={`p-5 rounded-2xl border transition-all duration-200 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
                       active
-                        ? "bg-[#ff5500]/10 border-[#ff5500] text-white ring-1 ring-[#ff5500]"
-                        : "bg-white/5 border-white/10 text-zinc-300 hover:border-white/20"
+                        ? "bg-[#ff5500]/10 border-[#ff5500] text-foreground ring-1 ring-[#ff5500]"
+                        : "bg-secondary/40 border-border text-foreground hover:border-primary/40 hover:bg-secondary/70"
                     }`}
                   >
                     {service.badge && (
@@ -290,22 +284,22 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
                     <div>
                       <div className="flex items-center space-x-2">
-                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${active ? "border-[#ff5500] bg-[#ff5500]" : "border-zinc-500"}`}>
+                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${active ? "border-[#ff5500] bg-[#ff5500]" : "border-muted-foreground"}`}>
                           {active && <Check className="w-3 h-3 text-white" />}
                         </div>
-                        <h4 className="font-outfit font-bold text-base text-white">{service.title}</h4>
+                        <h4 className="font-outfit font-bold text-base text-foreground">{service.title}</h4>
                       </div>
-                      <p className="text-xs text-zinc-400 mt-1 pl-6 leading-relaxed">{service.tagline}</p>
+                      <p className="text-xs text-muted-foreground mt-1 pl-6 leading-relaxed">{service.tagline}</p>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                      <div className="flex items-center text-xs text-zinc-400 space-x-1">
+                    <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
+                      <div className="flex items-center text-xs text-muted-foreground space-x-1">
                         <Clock className="w-3.5 h-3.5 text-[#ff5500]" />
                         <span>{service.duration}</span>
                       </div>
                       <div className="text-right">
-                        <span className="text-[11px] text-zinc-400">Starts: </span>
-                        <span className="text-xl font-display font-extrabold text-[#ff5500]">${calcPkgPrice}</span>
+                        <span className="text-[11px] text-muted-foreground">Starts: </span>
+                        <span className="text-xl font-display font-extrabold text-[#ff5500]">${service.startingPrice}</span>
                       </div>
                     </div>
                   </div>
@@ -316,7 +310,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
           {/* STEP 3: ADD-ON SERVICES */}
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-zinc-300 mb-3 flex items-center gap-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#ff5500]" /> 3. Select Add-on Enhancements (Optional)
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -329,17 +323,17 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     onClick={() => toggleAddon(addon.id)}
                     className={`p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center justify-between ${
                       active
-                        ? "bg-[#ff5500]/20 border-[#ff5500] text-white"
-                        : "bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10"
+                        ? "bg-[#ff5500]/20 border-[#ff5500] text-foreground"
+                        : "bg-secondary/40 border-border text-foreground hover:bg-secondary"
                     }`}
                   >
                     <div className="flex items-center space-x-2.5">
-                      <div className={`w-4 h-4 rounded border flex items-center justify-center ${active ? "border-[#ff5500] bg-[#ff5500]" : "border-zinc-500"}`}>
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center ${active ? "border-[#ff5500] bg-[#ff5500]" : "border-muted-foreground"}`}>
                         {active && <Check className="w-3 h-3 text-white" />}
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white">{addon.name}</div>
-                        <div className="text-[10px] text-zinc-400">{addon.duration}</div>
+                        <div className="text-xs font-bold text-foreground">{addon.name}</div>
+                        <div className="text-[10px] text-muted-foreground">{addon.duration}</div>
                       </div>
                     </div>
                     <span className="text-xs font-bold text-[#ff5500]">{addon.price}</span>
@@ -351,8 +345,8 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
           {/* STEP 4: DATE & TIME SLOT PICKER */}
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-zinc-300 mb-3 flex items-center gap-2">
-              <CalendarIcon className="w-4 h-4 text-[#ff5500]" /> 4. Select Preferred Date & Arrival Window (6 AM - 9 PM)
+            <label className="block text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
+              <CalendarIcon className="w-4 h-4 text-[#ff5500]" /> 4. Select Preferred Date & Arrival Window (7 AM - 8 PM, 7 Days a Week)
             </label>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
               <div className="md:col-span-7">
@@ -361,11 +355,11 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                   onSelectDate={(date) => setSelectedDate(date)}
                 />
               </div>
-              <div className="md:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
-                <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <div className="md:col-span-5 bg-secondary/40 border border-border rounded-2xl p-4 sm:p-5">
+                <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#ff5500]" /> Arrival Window Request
                 </h4>
-                <p className="text-[11px] text-zinc-400 mb-3">
+                <p className="text-[11px] text-muted-foreground mb-3">
                   Select your ideal arrival time. We will confirm based on our daily route.
                 </p>
                 <div className="grid grid-cols-2 gap-2">
@@ -379,7 +373,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                         className={`py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-center ${
                           active
                             ? "bg-[#ff5500] text-white shadow-md shadow-[#ff5500]/30"
-                            : "bg-white/5 text-zinc-300 border border-white/5 hover:bg-white/10"
+                            : "bg-card text-foreground border border-border hover:bg-muted"
                         }`}
                       >
                         {slot}
@@ -388,7 +382,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                   })}
                 </div>
                 {selectedDate && (
-                  <div className="mt-4 p-3 rounded-xl bg-[#ff5500]/10 border border-[#ff5500]/20 text-xs text-zinc-300">
+                  <div className="mt-4 p-3 rounded-xl bg-[#ff5500]/10 border border-[#ff5500]/20 text-xs text-foreground/90">
                     Requested Slot: <span className="font-bold text-[#ff5500]">{selectedDate}</span> at <span className="font-bold text-[#ff5500]">{selectedTimeSlot}</span>
                   </div>
                 )}
@@ -398,13 +392,13 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
           {/* STEP 5: PREFERRED NOTIFICATION METHOD & CONTACT INFO */}
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-zinc-300 mb-3 flex items-center gap-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-foreground mb-3 flex items-center gap-2">
               <User className="w-4 h-4 text-[#ff5500]" /> 5. Contact Details & Preferred Confirmation Method
             </label>
 
             {/* Notification Preference Selector */}
-            <div className="mb-5 p-4 rounded-2xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase text-zinc-300 mb-2">
+            <div className="mb-5 p-4 rounded-2xl bg-secondary/30 border border-border">
+              <div className="text-xs font-bold uppercase text-foreground mb-2">
                 How would you like to receive your booking confirmation & updates?
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -413,14 +407,14 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                   onClick={() => setNotificationMethod("sms")}
                   className={`p-3 rounded-xl border flex items-center space-x-3 text-left transition-all cursor-pointer ${
                     notificationMethod === "sms"
-                      ? "bg-[#ff5500]/20 border-[#ff5500] text-white"
-                      : "bg-white/5 border-white/10 text-zinc-400 hover:bg-white/10"
+                      ? "bg-[#ff5500]/20 border-[#ff5500] text-foreground"
+                      : "bg-card border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  <Smartphone className={`w-5 h-5 ${notificationMethod === "sms" ? "text-[#ff5500]" : "text-zinc-500"}`} />
+                  <Smartphone className={`w-5 h-5 ${notificationMethod === "sms" ? "text-[#ff5500]" : "text-muted-foreground"}`} />
                   <div>
-                    <div className="text-xs font-bold text-white">SMS Text Message & Phone Call</div>
-                    <div className="text-[10px] text-zinc-400">Direct mobile text & call (Standard for US)</div>
+                    <div className="text-xs font-bold text-foreground">SMS Text Message & Phone Call</div>
+                    <div className="text-[10px] text-muted-foreground">Direct mobile text & call (Standard for US)</div>
                   </div>
                 </button>
 
@@ -429,14 +423,14 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                   onClick={() => setNotificationMethod("whatsapp")}
                   className={`p-3 rounded-xl border flex items-center space-x-3 text-left transition-all cursor-pointer ${
                     notificationMethod === "whatsapp"
-                      ? "bg-emerald-500/20 border-emerald-500 text-white"
-                      : "bg-white/5 border-white/10 text-zinc-400 hover:bg-white/10"
+                      ? "bg-emerald-500/20 border-emerald-500 text-foreground"
+                      : "bg-card border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  <MessageSquare className={`w-5 h-5 ${notificationMethod === "whatsapp" ? "text-emerald-400" : "text-zinc-500"}`} />
+                  <MessageSquare className={`w-5 h-5 ${notificationMethod === "whatsapp" ? "text-emerald-500" : "text-muted-foreground"}`} />
                   <div>
-                    <div className="text-xs font-bold text-white">WhatsApp Message</div>
-                    <div className="text-[10px] text-zinc-400">Direct chat via WhatsApp</div>
+                    <div className="text-xs font-bold text-foreground">WhatsApp Message</div>
+                    <div className="text-[10px] text-muted-foreground">Direct chat via WhatsApp</div>
                   </div>
                 </button>
               </div>
@@ -444,9 +438,9 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">Full Name *</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Full Name *</label>
                 <div className="relative">
-                  <User className="w-4 h-4 absolute left-3.5 top-3.5 text-zinc-500" />
+                  <User className="w-4 h-4 absolute left-3.5 top-3.5 text-muted-foreground" />
                   <input
                     type="text"
                     name="name"
@@ -454,15 +448,15 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. John Smith"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
+                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">Phone Number (For Text/Call Confirmation) *</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Phone Number (For Text/Call Confirmation) *</label>
                 <div className="relative">
-                  <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-zinc-500" />
+                  <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-muted-foreground" />
                   <input
                     type="tel"
                     name="phone"
@@ -470,15 +464,15 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+1 (951) 000-0000"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
+                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">Email Address *</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Email Address *</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-zinc-500" />
+                  <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-muted-foreground" />
                   <input
                     type="email"
                     name="email"
@@ -486,15 +480,15 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="john@example.com"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
+                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">Service Address / City (Where We Detail) *</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1">Service Address / City (Where We Detail) *</label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 absolute left-3.5 top-3.5 text-zinc-500" />
+                  <MapPin className="w-4 h-4 absolute left-3.5 top-3.5 text-muted-foreground" />
                   <input
                     type="text"
                     name="address"
@@ -502,35 +496,35 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                     value={formData.address}
                     onChange={handleChange}
                     placeholder="e.g. Riverside, CA / Moreno Valley"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
+                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
                   />
                 </div>
               </div>
             </div>
 
             <div className="mt-4">
-              <label className="block text-xs font-semibold text-zinc-400 mb-1">Vehicle Make, Model & Special Requests (Optional)</label>
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Vehicle Make, Model & Special Requests (Optional)</label>
               <div className="relative">
-                <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-zinc-500" />
+                <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-muted-foreground" />
                 <textarea
                   name="notes"
                   rows={3}
                   value={formData.notes}
                   onChange={handleChange}
                   placeholder="e.g. 2023 Tesla Model Y, heavy dog hair in backseat, scratch on rear bumper..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
+                  className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#ff5500] focus:ring-1 focus:ring-[#ff5500]"
                 />
               </div>
             </div>
           </div>
 
           {/* ACTION BUTTONS & ESTIMATE */}
-          <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-left">
-              <div className="text-xs text-zinc-400">Total Estimated Price:</div>
+              <div className="text-xs text-muted-foreground">Total Estimated Price:</div>
               <div className="text-3xl font-display font-extrabold text-[#ff5500]">
                 ${totalEstimatedPrice}
-                <span className="text-xs font-normal text-zinc-400 ml-1.5">(Prices vary on vehicle & condition)</span>
+                <span className="text-xs font-normal text-muted-foreground ml-1.5">(Starting estimate. Price differs according to size & condition)</span>
               </div>
             </div>
 
@@ -558,10 +552,10 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
         {/* WEB CONFIRMATION MODAL */}
         {isSubmitted && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="bg-[#121214] border border-[#ff5500]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative text-center">
+            <div className="bg-card border border-[#ff5500]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative text-center">
               <button
                 onClick={() => setIsSubmitted(false)}
-                className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white rounded-full bg-white/5 cursor-pointer"
+                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-full bg-secondary cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -570,18 +564,18 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                 <CheckCircle2 className="w-10 h-10 text-[#ff5500]" />
               </div>
 
-              <h3 className="text-2xl font-display font-bold text-white uppercase">
+              <h3 className="text-2xl font-display font-bold text-foreground uppercase">
                 Appointment Request Received!
               </h3>
-              <p className="text-zinc-300 text-sm mt-2">
-                Thank you, <span className="text-[#ff5500] font-bold">{formData.name || "Valued Customer"}</span>! Owner <strong className="text-white">Harbaz Hundal</strong> or the Above & Beyond team will contact you via <strong className="text-[#ff5500]">{notificationMethod === "whatsapp" ? "WhatsApp" : "SMS Text / Phone"}</strong> to confirm your arrival window.
+              <p className="text-muted-foreground text-sm mt-2">
+                Thank you, <span className="text-[#ff5500] font-bold">{formData.name || "Valued Customer"}</span>! Owner <strong className="text-foreground">Harbaz Hundal</strong> or the Above & Beyond team will contact you via <strong className="text-[#ff5500]">{notificationMethod === "whatsapp" ? "WhatsApp" : "SMS Text / Phone"}</strong> to confirm your arrival window.
               </p>
 
-              <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-left text-xs space-y-1.5 text-zinc-300">
-                <div><strong className="text-white">Package:</strong> {currentServiceObj.title}</div>
-                <div><strong className="text-white">Vehicle:</strong> {currentVehicleObj.name}</div>
-                <div><strong className="text-white">Requested Window:</strong> {selectedDate || "Flexible"} ({selectedTimeSlot})</div>
-                <div><strong className="text-white">Estimated Total:</strong> ${totalEstimatedPrice}</div>
+              <div className="mt-6 p-4 rounded-2xl bg-secondary/50 border border-border text-left text-xs space-y-1.5 text-muted-foreground">
+                <div><strong className="text-foreground">Package:</strong> {currentServiceObj.title}</div>
+                <div><strong className="text-foreground">Vehicle:</strong> {currentVehicleObj.name}</div>
+                <div><strong className="text-foreground">Requested Window:</strong> {selectedDate || "Flexible"} ({selectedTimeSlot})</div>
+                <div><strong className="text-foreground">Estimated Total:</strong> ${totalEstimatedPrice}</div>
               </div>
 
               <div className="mt-6 flex flex-col gap-2.5">
@@ -597,14 +591,14 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                 </button>
                 <a
                   href={`tel:${siteConfig.phoneRaw}`}
-                  className="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-zinc-200 font-semibold text-xs flex items-center justify-center space-x-1.5 cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-secondary hover:bg-muted text-foreground font-semibold text-xs flex items-center justify-center space-x-1.5 cursor-pointer border border-border"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#ff5500]" />
                   <span>Call Harbaz Directly: {siteConfig.phone}</span>
                 </a>
                 <button
                   onClick={() => setIsSubmitted(false)}
-                  className="w-full py-2 text-zinc-400 hover:text-white font-semibold text-xs cursor-pointer"
+                  className="w-full py-2 text-muted-foreground hover:text-foreground font-semibold text-xs cursor-pointer"
                 >
                   Close Window
                 </button>
@@ -621,18 +615,18 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 function ContactFormSkeleton() {
   return (
     <div className="w-full relative">
-      <div className="bg-[#121214] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl glass-card relative overflow-hidden animate-pulse">
-        <div className="h-6 w-48 bg-white/10 rounded-full mb-4" />
-        <div className="h-10 w-3/4 bg-white/10 rounded-xl mb-3" />
-        <div className="h-4 w-1/2 bg-white/5 rounded-lg mb-8" />
+      <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl glass-card relative overflow-hidden animate-pulse">
+        <div className="h-6 w-48 bg-muted rounded-full mb-4" />
+        <div className="h-10 w-3/4 bg-muted rounded-xl mb-3" />
+        <div className="h-4 w-1/2 bg-muted/60 rounded-lg mb-8" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-20 bg-white/5 rounded-2xl" />
+            <div key={i} className="h-20 bg-muted/60 rounded-2xl" />
           ))}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-36 bg-white/5 rounded-2xl" />
+            <div key={i} className="h-36 bg-muted/60 rounded-2xl" />
           ))}
         </div>
       </div>

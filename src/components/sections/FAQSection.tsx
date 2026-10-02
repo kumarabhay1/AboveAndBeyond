@@ -26,7 +26,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-20 lg:py-28 bg-[#0c0c0e] relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-background relative overflow-hidden">
       <SectionAtmosphere />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -38,10 +38,10 @@ export function FAQSection() {
               Got Questions? We Have Answers.
             </span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold uppercase text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold uppercase text-foreground tracking-tight">
             FREQUENTLY ASKED <span className="text-gradient-orange">QUESTIONS</span>
           </h2>
-          <p className="mt-3 text-zinc-400 text-base">
+          <p className="mt-3 text-muted-foreground text-base">
             Everything you need to know about our mobile detailing van, 9H ceramic coatings, and booking policies.
           </p>
         </div>
@@ -55,7 +55,7 @@ export function FAQSection() {
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 activeCategory === cat.id
                   ? "bg-[#ff5500] text-white shadow-md shadow-[#ff5500]/30"
-                  : "bg-white/5 text-zinc-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                  : "bg-card text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
               }`}
             >
               {cat.label}
@@ -70,23 +70,23 @@ export function FAQSection() {
             return (
               <div
                 key={faq.id}
-                className="bg-[#121214] border border-white/10 rounded-2xl overflow-hidden glass-card transition-all duration-200 hover:border-white/20"
+                className="bg-card border border-border rounded-2xl overflow-hidden glass-card transition-all duration-200 hover:border-primary/40 shadow-sm"
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(faq.id)}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between space-x-4 cursor-pointer"
                 >
-                  <span className="font-outfit font-bold text-base sm:text-lg text-white">
+                  <span className="font-outfit font-bold text-base sm:text-lg text-foreground">
                     {faq.question}
                   </span>
-                  <div className={`w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 bg-[#ff5500]/20 text-[#ff5500]" : "text-zinc-400"}`}>
+                  <div className={`w-8 h-8 rounded-full bg-secondary flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 bg-[#ff5500]/20 text-[#ff5500]" : "text-muted-foreground"}`}>
                     <ChevronDown className="w-5 h-5" />
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm text-zinc-300 leading-relaxed border-t border-white/5">
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm text-muted-foreground leading-relaxed border-t border-border">
                     {faq.answer}
                   </div>
                 )}

@@ -5,13 +5,13 @@ import { Phone, ShieldCheck, ArrowRight, Truck } from "lucide-react";
 
 export function CTASection() {
   return (
-    <section className="py-20 lg:py-28 bg-[#0c0c0e] relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-background relative overflow-hidden">
       {/* Background Decorative Lighting */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#ff5500]/10 via-transparent to-[#ff5500]/10 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#ff5500]/15 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="bg-gradient-to-br from-[#18181b] via-[#121214] to-[#0c0c0e] border border-[#ff5500]/40 rounded-3xl p-8 sm:p-14 glass-card shadow-2xl relative overflow-hidden text-center">
+        <div className="bg-gradient-to-br from-zinc-900 via-[#141417] to-zinc-950 border border-[#ff5500]/40 rounded-3xl p-8 sm:p-14 glass-card shadow-2xl relative overflow-hidden text-center text-white">
           
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#ff5500]/15 border border-[#ff5500]/30 mb-6">
             <Truck className="w-4 h-4 text-[#ff5500]" />
@@ -26,7 +26,7 @@ export function CTASection() {
           </h2>
 
           <p className="mt-4 max-w-2xl mx-auto text-zinc-300 text-sm sm:text-base md:text-lg">
-            Book your appointment online or call Harbaz Hundal directly at <span className="text-white font-bold">{siteConfig.phone}</span>. Mobile service available 6:00 AM - 9:00 PM across the Inland Empire & Southern California!
+            Book your appointment online or call Harbaz Hundal directly at <span className="text-white font-bold">{siteConfig.phone}</span>. Mobile service available 7:00 AM - 8:00 PM (7 Days a Week) across the Inland Empire & Southern California!
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -55,7 +55,7 @@ export function CTASection() {
               <ShieldCheck className="w-4 h-4 text-[#ff5500]" /> 100% Self-Powered Mobile Rig
             </span>
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#ff5500]" /> 6 AM - 9 PM Seven Days a Week
+              <ShieldCheck className="w-4 h-4 text-[#ff5500]" /> 7:00 AM - 8:00 PM Seven Days a Week
             </span>
           </div>
 

@@ -55,7 +55,7 @@ export default function ServiceAreasPage() {
           </h1>
           
           <p className="text-base sm:text-lg lg:text-xl text-zinc-200 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
-            Providing fully equipped mobile car detailing across Riverside, San Bernardino, and the entire Inland Empire with zero travel surcharges.
+            Providing fully equipped mobile car detailing across Riverside, San Bernardino, and surrounding Southern California areas.
           </p>
         </div>
 

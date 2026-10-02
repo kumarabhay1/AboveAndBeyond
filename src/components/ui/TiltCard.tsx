@@ -13,194 +13,117 @@ export interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function TiltCard({
   children,
   className = "",
-  tiltMaxX = 10,
-  tiltMaxY = 10,
-  glareEnabled = true,
+  tiltMaxX = 1.8,
+  tiltMaxY = 1.8,
+  glareEnabled = false,
   onMouseEnter,
   onMouseMove,
   onMouseLeave,
-  onTouchStart,
-  onTouchMove,
-  onTouchEnd,
   style,
   ...props
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
-  const rafId = useRef<number | null>(null);
-
-  // Cached DOM references to prevent querySelectorAll on every mouse frame
-  const imgsRef = useRef<HTMLElement[]>([]);
-  const contentsRef = useRef<HTMLElement[]>([]);
-  const glareRef = useRef<HTMLDivElement | null>(null);
-  const isCachedRef = useRef(false);
-
-  const updateCachedRefs = useCallback(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    imgsRef.current = Array.from(card.querySelectorAll<HTMLElement>("[data-parallax-img]"));
-    contentsRef.current = Array.from(card.querySelectorAll<HTMLElement>("[data-parallax-content]"));
-    glareRef.current = card.querySelector<HTMLDivElement>("[data-tilt-glare]");
-    isCachedRef.current = true;
-  }, []);
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const reducedMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setIsDisabled(reducedMotionMq.matches);
 
-    const checkState = () => {
-      setIsDisabled(reducedMotionMq.matches);
-    };
-
-    checkState();
+    const checkState = () => setIsDisabled(reducedMotionMq.matches);
     reducedMotionMq.addEventListener("change", checkState);
-
     return () => {
       reducedMotionMq.removeEventListener("change", checkState);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
-  const applyTilt = useCallback(
-    (clientX: number, clientY: number) => {
-      if (isDisabled) return;
+  const handleMouseEnter = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
       const card = cardRef.current;
-      if (!card) return;
-
-      if (!isCachedRef.current) {
-        updateCachedRefs();
+      if (card) {
+        rectRef.current = card.getBoundingClientRect();
+        // Remove transform transition during live tracking to eliminate mouse lag
+        card.style.transition = "box-shadow 0.25s ease, border-color 0.25s ease";
       }
-
-      const rect = card.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      // Ensure within bounds
-      if (x < 0 || x > rect.width || y < 0 || y > rect.height) return;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const percentX = (x - centerX) / centerX;
-      const percentY = (y - centerY) / centerY;
-
-      const rotateX = percentY * -tiltMaxX;
-      const rotateY = percentX * tiltMaxY;
-
-      if (rafId.current) cancelAnimationFrame(rafId.current);
-
-      rafId.current = requestAnimationFrame(() => {
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.transition = "transform 0.1s ease-out";
-
-        // 3D Parallax shift for Image layers using cached refs
-        imgsRef.current.forEach((img) => {
-          const moveX = percentX * -12;
-          const moveY = percentY * -12;
-          img.style.transform = `scale(1.12) translate3d(${moveX}px, ${moveY}px, 0px)`;
-          img.style.transition = "transform 0.1s ease-out";
-        });
-
-        // 3D Parallax float for Content layers using cached refs
-        contentsRef.current.forEach((content) => {
-          content.style.transform = `translateZ(25px)`;
-          content.style.transition = "transform 0.1s ease-out";
-        });
-
-        // Move glare reflection using cached ref
-        const glare = glareRef.current;
-        if (glare) {
-          const glareX = (x / rect.width) * 100;
-          const glareY = (y / rect.height) * 100;
-          glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.2) 0%, rgba(255,85,0,0.08) 35%, transparent 65%)`;
-          glare.style.opacity = "1";
-        }
-      });
+      onMouseEnter?.(e);
     },
-    [tiltMaxX, tiltMaxY, isDisabled, updateCachedRefs]
+    [onMouseEnter]
   );
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      applyTilt(e.clientX, e.clientY);
-      onMouseMove?.(e);
-    },
-    [applyTilt, onMouseMove]
-  );
-
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent<HTMLDivElement>) => {
-      if (e.touches[0]) {
-        applyTilt(e.touches[0].clientX, e.touches[0].clientY);
-      }
-      onTouchMove?.(e);
-    },
-    [applyTilt, onTouchMove]
-  );
-
-  const handleReset = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
       if (isDisabled) return;
-      if (rafId.current) cancelAnimationFrame(rafId.current);
-
       const card = cardRef.current;
       if (!card) return;
 
-      rafId.current = requestAnimationFrame(() => {
-        card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-        card.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+      const clientX = e.clientX;
+      const clientY = e.clientY;
 
-        imgsRef.current.forEach((img) => {
-          img.style.transform = "scale(1) translate3d(0px, 0px, 0px)";
-          img.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-        });
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
 
-        contentsRef.current.forEach((content) => {
-          content.style.transform = "translateZ(0px)";
-          content.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-        });
-
-        const glare = glareRef.current;
-        if (glare) {
-          glare.style.opacity = "0";
+      rafRef.current = requestAnimationFrame(() => {
+        let rect = rectRef.current;
+        if (!rect) {
+          rect = card.getBoundingClientRect();
+          rectRef.current = rect;
         }
-        isCachedRef.current = false;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        if (centerX <= 0 || centerY <= 0) return;
+
+        // Subtle, elegant 3D tilt without distortion
+        const rotateX = Math.max(-tiltMaxX, Math.min(tiltMaxX, ((y - centerY) / centerY) * -tiltMaxX));
+        const rotateY = Math.max(-tiltMaxY, Math.min(tiltMaxY, ((x - centerX) / centerX) * tiltMaxY));
+
+        card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px)`;
       });
 
+      onMouseMove?.(e);
+    },
+    [isDisabled, tiltMaxX, tiltMaxY, onMouseMove]
+  );
+
+  const handleMouseLeave = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      rectRef.current = null;
+      const card = cardRef.current;
+      if (card) {
+        // Smooth snap back animation when cursor leaves
+        card.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease";
+        card.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0px)";
+      }
       onMouseLeave?.(e);
     },
-    [isDisabled, onMouseLeave]
+    [onMouseLeave]
   );
 
   return (
     <div
       ref={cardRef}
-      className={`relative transform-gpu will-change-transform cursor-pointer ${className}`}
-      onMouseEnter={(e) => {
-        updateCachedRefs();
-        onMouseEnter?.(e);
-      }}
+      className={`relative transform-gpu will-change-transform ${className}`}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleReset}
-      onTouchStart={(e) => {
-        updateCachedRefs();
-        onTouchStart?.(e);
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        ...style,
       }}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={(e) => {
-        handleReset(e as any);
-        onTouchEnd?.(e);
-      }}
-      style={{ transformStyle: "preserve-3d", ...style }}
       {...props}
     >
       {children}
-      {/* Glare reflection overlay */}
-      {glareEnabled && (
-        <div
-          data-tilt-glare
-          className="absolute inset-0 z-30 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-300"
-        />
-      )}
     </div>
   );
 }

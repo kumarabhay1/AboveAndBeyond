@@ -104,7 +104,7 @@ export default function AboutPage() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 
                 <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-card/95 backdrop-blur-md border border-border shadow-xl">
                   <div className="font-outfit font-bold text-lg text-foreground">{siteConfig.owner}</div>
@@ -198,7 +198,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-display font-bold uppercase text-foreground mb-2">7 Days a Week Availability</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    Operating from 6:00 AM to 9:00 PM every day of the week to fit around busy family and executive work schedules.
+                    Operating from 7:00 AM to 8:00 PM every day of the week to fit around busy family and executive work schedules.
                   </p>
                 </div>
               </div>

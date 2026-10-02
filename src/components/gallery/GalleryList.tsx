@@ -28,7 +28,7 @@ export function GalleryList() {
             className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
               activeCategory === cat
                 ? "bg-[#ff5500] text-white shadow-lg shadow-[#ff5500]/30 scale-105"
-                : "bg-white/5 text-zinc-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                : "bg-secondary text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
             }`}
           >
             {cat}
@@ -50,7 +50,7 @@ export function GalleryList() {
             >
               <TiltCard
                 onClick={() => setSelectedImage(item)}
-                className="bg-[#121214] border border-white/10 rounded-3xl overflow-hidden glass-card group transition-all duration-300 hover:border-[#ff5500]/60 flex flex-col h-full"
+                className="bg-card border border-border rounded-3xl overflow-hidden glass-card group transition-all duration-300 hover:border-[#ff5500]/60 flex flex-col h-full shadow-lg"
               >
                 <div className="relative h-72 w-full overflow-hidden">
                   <div data-parallax-img className="w-full h-full relative transition-transform duration-500">
@@ -62,7 +62,7 @@ export function GalleryList() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
                   
                   <span className="absolute top-4 right-4 text-xs font-extrabold uppercase px-3 py-1 rounded-full bg-[#ff5500] text-white shadow-md z-10">
                     {item.tag}
@@ -80,7 +80,7 @@ export function GalleryList() {
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#ff5500]">
                       {item.category}
                     </span>
-                    <h3 className="font-outfit font-bold text-xl text-white mt-1 group-hover:text-[#ff5500] transition-colors">
+                    <h3 className="font-outfit font-bold text-xl text-foreground mt-1 group-hover:text-[#ff5500] transition-colors">
                       {item.title}
                     </h3>
                   </div>
@@ -106,7 +106,7 @@ export function GalleryList() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-[#121214] border border-white/20 rounded-3xl overflow-hidden glass-card shadow-2xl"
+              className="relative max-w-4xl w-full bg-card border border-border rounded-3xl overflow-hidden glass-card shadow-2xl"
             >
               <button
                 onClick={() => setSelectedImage(null)}
@@ -122,7 +122,7 @@ export function GalleryList() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
               </div>
 
               <div className="p-6 sm:p-8 flex items-center justify-between">
@@ -130,7 +130,7 @@ export function GalleryList() {
                   <span className="text-xs font-bold uppercase tracking-wider text-[#ff5500]">
                     {selectedImage.category} • {selectedImage.tag}
                   </span>
-                  <h3 className="text-2xl font-display font-bold text-white uppercase mt-1">
+                  <h3 className="text-2xl font-display font-bold text-foreground uppercase mt-1">
                     {selectedImage.title}
                   </h3>
                 </div>

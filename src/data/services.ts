@@ -6,13 +6,13 @@ export interface VehicleCategoryMultiplier {
 }
 
 export const vehicleCategories: VehicleCategoryMultiplier[] = [
-  { id: "sedan", name: "Sedan / Hatchback", multiplier: 1.0, description: "Standard 2 & 4-door compact or mid-size cars" },
+  { id: "sedan", name: "Sedan / Coupe", multiplier: 1.0, description: "Compact & mid-size 2-door or 4-door cars" },
   { id: "small-suv", name: "Small SUV / Crossover", multiplier: 1.15, description: "5-passenger compact SUVs & crossovers" },
   { id: "big-suv", name: "Big SUV / 3-Row", multiplier: 1.3, description: "Full-size 7-8 passenger SUVs & family haulers" },
-  { id: "truck", name: "Truck / Pickup", multiplier: 1.35, description: "Mid-size & full-size pickup trucks" },
+  { id: "truck", name: "Truck / Pickup", multiplier: 1.35, description: "Single, extended & crew cab pickup trucks" },
+  { id: "semi-truck", name: "Semi-Truck / Heavy Duty", multiplier: 1.8, description: "Commercial semi cabs, flatbeds & heavy rigs" },
   { id: "van", name: "Van / Minivan", multiplier: 1.4, description: "Passenger minivans & commercial cargo vans" },
-  { id: "semi-truck", name: "Semi-Truck / Heavy Duty", multiplier: 1.8, description: "Commercial semi-truck cabs & heavy-duty rigs" },
-  { id: "sports-car", name: "Sports Cars / Exotics", multiplier: 1.25, description: "High-performance sports cars, vintage & exotics" },
+  { id: "rv", name: "RVs / Motorhomes", multiplier: 1.9, description: "Recreational vehicles, campers & motorhomes" },
 ];
 
 export interface ServicePackage {
