@@ -52,7 +52,13 @@ export function AddOnServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-12"
+        >
           <div>
             <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25 mb-3">
               <PlusCircle className="w-4 h-4 text-[#ff5500]" />
@@ -75,7 +81,7 @@ export function AddOnServicesSection() {
             <span>Customize Booking</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#ff5500]" />
           </Link>
-        </div>
+        </motion.div>
 
         {/* Add-ons 3-Column Independent Streams: Expanding one card NEVER creates empty voids */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
@@ -104,14 +110,21 @@ export function AddOnServicesSection() {
     const isExpanded = expandedAddonId === addon.id;
 
     return (
-      <TiltCard
+      <motion.div
         key={addon.id}
-        className={`rounded-3xl bg-card border glass-card transition-all duration-300 flex flex-col justify-between group overflow-hidden ${
-          isExpanded
-            ? "border-[#ff5500] shadow-[0_15px_40px_rgba(255,85,0,0.18)]"
-            : "border-border hover:border-[#ff5500]/50 shadow-xl"
-        }`}
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full"
       >
+        <TiltCard
+          className={`rounded-3xl bg-card border glass-card transition-all duration-300 flex flex-col justify-between group overflow-hidden ${
+            isExpanded
+              ? "border-[#ff5500] shadow-[0_15px_40px_rgba(255,85,0,0.18)]"
+              : "border-border hover:border-[#ff5500]/50 shadow-xl"
+          }`}
+        >
         <div>
           {/* Image Stage */}
           <div className="relative h-52 w-full overflow-hidden">
@@ -205,6 +218,7 @@ export function AddOnServicesSection() {
           </div>
         </div>
       </TiltCard>
+      </motion.div>
     );
   }
 }

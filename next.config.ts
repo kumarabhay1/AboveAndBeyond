@@ -13,7 +13,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-slot",
+      "clsx",
+      "tailwind-merge",
+    ],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

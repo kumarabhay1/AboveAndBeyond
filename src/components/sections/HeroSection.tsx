@@ -59,7 +59,7 @@ export function HeroSection() {
                 hidden: { opacity: 0, y: 18 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
               }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold uppercase tracking-tight text-balance leading-[0.93] mb-5 sm:mb-7"
+              className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold uppercase tracking-tight text-balance leading-[0.93] mb-5 sm:mb-7"
             >
               <span className="block text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
                 NOT JUST CLEAN.

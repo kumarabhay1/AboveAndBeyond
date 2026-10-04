@@ -27,6 +27,6 @@ export const siteConfig = {
   whatsappPrefilledMessage: "Hello Harbaz! I would like to inquire about booking a mobile detailing service with Above and Beyond Car Detailing.",
   getWhatsAppUrl: (message?: string) => {
     const text = encodeURIComponent(message || siteConfig.whatsappPrefilledMessage);
-    return `https://wa.me/${siteConfig.phoneRaw}?text=${text}`;
+    return `https://api.whatsapp.com/send?phone=${siteConfig.phoneRaw}&text=${text}`;
   }
 };

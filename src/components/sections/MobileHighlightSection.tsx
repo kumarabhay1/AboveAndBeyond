@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { assetsData } from "@/data/assets";
 import { Truck, Droplets, Zap, ShieldCheck, CheckCircle2 } from "lucide-react";
@@ -35,7 +38,13 @@ export function MobileHighlightSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Text Column */}
-          <div className="lg:col-span-6 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 space-y-6"
+          >
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25">
               <Truck className="w-4 h-4 text-[#ff5500]" />
               <span className="text-xs font-bold uppercase tracking-wider text-[#ff5500]">
@@ -53,7 +62,7 @@ export function MobileHighlightSection() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {highlights.map((h, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-card border border-border glass-card shadow-sm">
+                <div key={i} className="p-4 rounded-2xl bg-card border border-border glass-card shadow-sm hover:border-[#ff5500]/40 transition-colors">
                   <div className="flex items-center space-x-2.5 mb-1.5">
                     {h.icon}
                     <h3 className="font-outfit font-bold text-sm text-foreground">{h.title}</h3>
@@ -66,7 +75,7 @@ export function MobileHighlightSection() {
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/contact"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#ff5500] to-[#ff7700] hover:from-[#e64a19] hover:to-[#ff5500] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#ff5500]/30 transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#ff5500] to-[#ff7700] hover:from-[#e64a19] hover:to-[#ff5500] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#ff5500]/30 transition-all flex items-center justify-center space-x-2 cursor-pointer hover:scale-105 active:scale-95"
               >
                 <span>Book Mobile Unit Now</span>
               </Link>
@@ -75,16 +84,22 @@ export function MobileHighlightSection() {
                 href={siteConfig.getWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600/15 hover:bg-emerald-600/25 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center space-x-2 transition-all cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600/15 hover:bg-emerald-600/25 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center space-x-2 transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <span>WhatsApp Harbaz Directly</span>
               </a>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Right Image Showcase */}
-          <div className="lg:col-span-6 relative">
+          <motion.div
+            initial={{ opacity: 0, x: 35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 relative"
+          >
             <div className="relative h-[420px] sm:h-[480px] w-full rounded-3xl overflow-hidden border border-border glass-card shadow-2xl">
               <Image
                 src={assetsData.mobileVanImage}
@@ -106,7 +121,7 @@ export function MobileHighlightSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

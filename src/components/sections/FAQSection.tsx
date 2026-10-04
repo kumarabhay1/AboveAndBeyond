@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { faqData } from "@/data/faq";
 import { SectionAtmosphere } from "@/components/ui/section-atmosphere";
 import { HelpCircle, ChevronDown, Sparkles } from "lucide-react";
@@ -31,7 +32,13 @@ export function FAQSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25 mb-3">
             <HelpCircle className="w-4 h-4 text-[#ff5500]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#ff5500]">
@@ -44,10 +51,16 @@ export function FAQSection() {
           <p className="mt-3 text-muted-foreground text-base">
             Everything you need to know about our mobile detailing van, 9H ceramic coatings, and booking policies.
           </p>
-        </div>
+        </motion.div>
 
         {/* Filter Pills */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center flex-wrap gap-2 mb-10"
+        >
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -61,16 +74,22 @@ export function FAQSection() {
               {cat.label}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* FAQ Accordion List */}
-        <div className="space-y-4">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-4"
+        >
           {filteredFaqs.map((faq) => {
             const isOpen = openFaqId === faq.id;
             return (
               <div
                 key={faq.id}
-                className="bg-card border border-border rounded-2xl overflow-hidden glass-card transition-all duration-200 hover:border-primary/40 shadow-sm"
+                className="bg-card border border-border rounded-2xl overflow-hidden glass-card transition-all duration-200 hover:border-[#ff5500]/40 shadow-sm"
               >
                 <button
                   type="button"
@@ -93,7 +112,7 @@ export function FAQSection() {
               </div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>

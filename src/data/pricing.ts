@@ -56,6 +56,17 @@ export const addOnServices: AddOnService[] = [
     image: "/images/addons/baby-seat-cleaned.webp"
   },
   {
+    id: "stain-removal",
+    name: "Stain Removal & Steam Clean",
+    price: "$39",
+    priceNum: 39,
+    duration: "30 - 45 mins",
+    description: "Deep commercial hot steam extraction lifting tough drink spills, grease, food stains, and deep upholstery discoloration.",
+    popular: true,
+    iconName: "Droplets",
+    image: "/images/addons/stain-removal.webp"
+  },
+  {
     id: "glass-water-repellent",
     name: "Glass Water Repellent",
     price: "$29",

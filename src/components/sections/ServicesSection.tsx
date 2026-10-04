@@ -46,7 +46,13 @@ export function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25 mb-4">
             <Shield className="w-4 h-4 text-[#ff5500]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#ff5500]">
@@ -59,10 +65,16 @@ export function ServicesSection() {
           <p className="mt-3 text-muted-foreground text-base sm:text-lg">
             Whether you need showroom-grade paint correction or a deep cabin refresh, our technicians arrive with state-of-the-art steam and ceramic equipment.
           </p>
-        </div>
+        </motion.div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center flex-wrap gap-2 mb-12"
+        >
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -76,7 +88,7 @@ export function ServicesSection() {
               {cat.label}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* 2-Column Independent Masonry Streams: Expanding one card NEVER creates empty voids in adjacent column */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -103,15 +115,22 @@ export function ServicesSection() {
     const isExpanded = expandedCardId === service.id;
 
     return (
-      <TiltCard
+      <motion.div
         key={service.id}
-        id={service.id}
-        className={`bg-card border rounded-3xl overflow-hidden glass-card transition-all duration-300 flex flex-col group ${
-          isExpanded
-            ? "border-[#ff5500] shadow-[0_20px_50px_rgba(255,85,0,0.2)]"
-            : "border-border hover:border-[#ff5500]/50 shadow-xl"
-        }`}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full"
       >
+        <TiltCard
+          id={service.id}
+          className={`bg-card border rounded-3xl overflow-hidden glass-card transition-all duration-300 flex flex-col group ${
+            isExpanded
+              ? "border-[#ff5500] shadow-[0_20px_50px_rgba(255,85,0,0.2)]"
+              : "border-border hover:border-[#ff5500]/50 shadow-xl"
+          }`}
+        >
         {/* Image Stage with Gradient & Badges */}
         <div className="relative h-64 sm:h-72 w-full overflow-hidden">
           <Image
@@ -269,6 +288,7 @@ export function ServicesSection() {
 
         </div>
       </TiltCard>
+      </motion.div>
     );
   }
 }

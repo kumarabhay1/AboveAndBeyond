@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { testimonialsData, overallStats } from "@/data/testimonials";
 import { SectionAtmosphere } from "@/components/ui/section-atmosphere";
 import { SectionDivider } from "@/components/ui/section-divider";
@@ -26,7 +27,13 @@ export function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto mb-14"
+        >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25 mb-3">
             <div className="flex -space-x-1">
               {[...Array(5)].map((_, i) => (
@@ -43,10 +50,16 @@ export function TestimonialsSection() {
           <p className="mt-3 text-muted-foreground text-base">
             Trusted by luxury car owners, busy families, and auto collectors across the Inland Empire & Southern California.
           </p>
-        </div>
+        </motion.div>
 
         {/* Testimonial Spotlight Slider */}
-        <div className="max-w-4xl mx-auto bg-card border border-border rounded-3xl p-8 sm:p-12 glass-card relative shadow-2xl">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 35 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-4xl mx-auto bg-card border border-border rounded-3xl p-8 sm:p-12 glass-card relative shadow-2xl"
+        >
           
           <Quote className="w-16 h-16 text-[#ff5500]/15 absolute top-6 right-6 pointer-events-none" />
 
@@ -111,7 +124,7 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
       <SectionDivider variant="subtle" className="absolute bottom-0 left-0 right-0 pointer-events-none" />

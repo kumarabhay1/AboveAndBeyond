@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { coverageStats } from "@/data/serviceAreas";
 import { SectionAtmosphere } from "@/components/ui/section-atmosphere";
 import { ServiceAreaMap } from "@/components/ui/ServiceAreaMap";
@@ -13,7 +14,13 @@ export function ServiceAreaSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto"
+        >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#ff5500]/10 border border-[#ff5500]/25 mb-3">
             <Navigation className="w-4 h-4 text-[#ff5500]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#ff5500]">
@@ -36,10 +43,16 @@ export function ServiceAreaSection() {
             <span className="text-muted-foreground">•</span>
             <span className="text-[#ff5500] font-bold">7 Days a Week (Mon - Sun)</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Coverage Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
           <div className="p-5 rounded-2xl bg-card border border-border glass-card text-center shadow-sm">
             <div className="text-2xl sm:text-3xl font-display font-extrabold text-[#ff5500]">
               {coverageStats.radiusMiles}
@@ -64,12 +77,17 @@ export function ServiceAreaSection() {
             </div>
             <div className="text-xs text-muted-foreground mt-1 font-semibold">Customer Satisfaction</div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Interactive Google Map Showcase */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <ServiceAreaMap />
-        </div>
+        </motion.div>
 
       </div>
     </section>

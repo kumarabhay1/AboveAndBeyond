@@ -32,21 +32,67 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(true);
+  const lastScrollYRef = React.useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = React.useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = React.useState(false);
   const [hoveredNavIndex, setHoveredNavIndex] = React.useState<number | null>(null);
   const dropdownTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  // Track scroll state for subtle glass depth shifts
+  const isScrolledRef = React.useRef(false);
+  const isVisibleRef = React.useRef(true);
+  const rafScrollRef = React.useRef<number | null>(null);
+
+  // Track scroll state and direction for smart auto-hide with RAF throttling
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (rafScrollRef.current) return;
+
+      rafScrollRef.current = requestAnimationFrame(() => {
+        rafScrollRef.current = null;
+        const currentScrollY = window.scrollY;
+        const shouldBeScrolled = currentScrollY > 20;
+
+        if (shouldBeScrolled !== isScrolledRef.current) {
+          isScrolledRef.current = shouldBeScrolled;
+          setIsScrolled(shouldBeScrolled);
+        }
+
+        // Don't hide if mobile menu is open or dropdown is active
+        if (mobileMenuOpen || servicesDropdownOpen) {
+          if (!isVisibleRef.current) {
+            isVisibleRef.current = true;
+            setIsVisible(true);
+          }
+          lastScrollYRef.current = currentScrollY;
+          return;
+        }
+
+        let newVisible = isVisibleRef.current;
+        if (currentScrollY < 40) {
+          newVisible = true;
+        } else if (currentScrollY > lastScrollYRef.current + 12 && currentScrollY > 100) {
+          newVisible = false;
+        } else if (currentScrollY < lastScrollYRef.current - 10) {
+          newVisible = true;
+        }
+
+        if (newVisible !== isVisibleRef.current) {
+          isVisibleRef.current = newVisible;
+          setIsVisible(newVisible);
+        }
+
+        lastScrollYRef.current = currentScrollY;
+      });
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafScrollRef.current) cancelAnimationFrame(rafScrollRef.current);
+    };
+  }, [mobileMenuOpen, servicesDropdownOpen]);
 
   // Close menus on route change
   React.useEffect(() => {
@@ -124,62 +170,80 @@ export function Navbar() {
   return (
     <>
       {/* Floating Glassmorphic Navigation Bar Container (Directly overlaying Hero) */}
-      <div className="fixed top-0 left-0 right-0 z-[100] w-full pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8 pointer-events-none">
-        <header
-          className={`pointer-events-auto max-w-7xl mx-auto rounded-full transition-all duration-300 relative ${
-            isScrolled
-              ? "bg-white/90 dark:bg-[#0c0c0e]/90 shadow-[0_12px_40px_rgba(0,0,0,0.1),0_0_24px_rgba(255,85,0,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_24px_rgba(255,85,0,0.12)] border border-black/10 dark:border-white/20"
-              : "bg-white/80 dark:bg-[#0c0c0e]/75 shadow-[0_8px_32px_rgba(0,0,0,0.06),0_0_16px_rgba(255,85,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_16px_rgba(255,85,0,0.06)] border border-black/10 dark:border-white/15 hover:border-black/20 dark:hover:border-white/25"
-          } backdrop-blur-xl`}
-          style={{
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-          }}
-        >
-          {/* Subtle Ambient Burnt Orange Top Specular Accent */}
-          <div className="absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#ff5500]/50 to-transparent pointer-events-none rounded-full" />
-          <div className="absolute inset-x-12 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent pointer-events-none rounded-full" />
-
-          <div className="px-3.5 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 lg:gap-4 relative z-10">
-            {/* ========================================================================= */}
-            {/* ZONE 1: LEFT — Brand Identity */}
-            {/* ========================================================================= */}
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2.5 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5500] rounded-full pr-2 py-0.5 transition-transform duration-200 active:scale-98 shrink-0"
-              aria-label="Above and Beyond Car Detailing Home"
+      <motion.div
+        initial={{ y: 0, opacity: 1 }}
+        animate={{
+          y: isVisible ? 0 : -110,
+          opacity: isVisible ? 1 : 0,
+        }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-[100] w-full pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8 pointer-events-none"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4 relative">
+          
+          {/* ========================================================================= */}
+          {/* STANDALONE FLOATING LUXURY BRAND EMBLEM (TOP-LEFT) */}
+          {/* ========================================================================= */}
+          <Link
+            href="/"
+            className="pointer-events-auto group relative flex items-center justify-center hover:scale-105 active:scale-95 transition-transform duration-300 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5500] rounded-2xl"
+            aria-label="Above and Beyond Car Detailing Home"
+          >
+            <div
+              className="relative flex items-center justify-center -my-1"
             >
-              <div className="relative h-10 w-10 sm:h-11 sm:w-11 rounded-full overflow-hidden p-0.5 bg-gradient-to-br from-[#ff5500]/40 to-black/10 dark:to-white/10 group-hover:from-[#ff5500] group-hover:to-[#ff7733] transition-all duration-300 shadow-[0_0_12px_rgba(255,85,0,0.3)]">
-                <div className="relative w-full h-full rounded-full bg-slate-900 dark:bg-[#0c0c0e] flex items-center justify-center overflow-hidden">
-                  <Image
-                    src="/logo.png"
-                    alt="Above and Beyond Car Detailing"
-                    width={44}
-                    height={44}
-                    className="object-contain filter drop-shadow-[0_0_8px_rgba(255,85,0,0.4)] group-hover:scale-105 transition-transform duration-300"
-                    priority
-                  />
-                </div>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Above and Beyond Car Detailing"
+                width={80}
+                height={80}
+                className="w-11 h-11 xs:w-13 xs:h-13 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-contain filter drop-shadow-[0_0_16px_rgba(255,85,0,0.45)] drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:drop-shadow-[0_0_24px_rgba(255,85,0,0.8)] transition-all duration-300"
+                priority
+              />
+            </div>
+          </Link>
 
-              <div className="flex flex-col justify-center">
-                <span className="font-display text-base sm:text-lg lg:text-xl font-extrabold uppercase tracking-wider text-zinc-900 dark:text-white leading-none group-hover:text-[#ff5500] transition-colors duration-200">
+          {/* ========================================================================= */}
+          {/* FLOATING CAPSULE HEADER: NAVIGATION LINKS & ACTIONS */}
+          {/* ========================================================================= */}
+          <header
+            className={`pointer-events-auto flex-1 min-w-0 rounded-full transition-all duration-300 relative ${
+              isScrolled
+                ? "bg-white/90 dark:bg-[#0c0c0e]/90 shadow-[0_12px_40px_rgba(0,0,0,0.1),0_0_24px_rgba(255,85,0,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_24px_rgba(255,85,0,0.12)] border border-black/10 dark:border-white/20"
+                : "bg-white/80 dark:bg-[#0c0c0e]/75 shadow-[0_8px_32px_rgba(0,0,0,0.06),0_0_16px_rgba(255,85,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_16px_rgba(255,85,0,0.06)] border border-black/10 dark:border-white/15 hover:border-black/20 dark:hover:border-white/25"
+            } backdrop-blur-xl`}
+            style={{
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+            }}
+          >
+            {/* Subtle Ambient Burnt Orange Top Specular Accent */}
+            <div className="absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#ff5500]/50 to-transparent pointer-events-none rounded-full" />
+            <div className="absolute inset-x-12 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent pointer-events-none rounded-full" />
+
+            <div className="px-2.5 xs:px-3.5 sm:px-5 py-1.5 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 lg:gap-4 relative z-10">
+              {/* Brand Typography Wordmark inside Pill */}
+              <Link
+                href="/"
+                className="inline-flex flex-col justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5500] rounded-full px-1.5 sm:px-2 py-0.5 transition-transform duration-200 active:scale-98 shrink min-w-0"
+                aria-label="Above and Beyond Car Detailing"
+              >
+                <span className="font-display text-xs xs:text-sm sm:text-base lg:text-xl font-extrabold uppercase tracking-wider text-zinc-900 dark:text-white leading-none group-hover:text-[#ff5500] transition-colors duration-200 truncate">
                   Above & Beyond
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 dark:text-[#cbd5e1]/70 leading-none mt-1 group-hover:text-zinc-700 dark:group-hover:text-[#cbd5e1] transition-colors">
+                <span className="text-[8px] xs:text-[9px] sm:text-[10px] font-extrabold tracking-[0.18em] sm:tracking-[0.22em] uppercase text-[#ff5500] leading-none mt-0.5 sm:mt-1 truncate">
                   Car Detailing
                 </span>
-              </div>
-            </Link>
+              </Link>
 
-            {/* ========================================================================= */}
-            {/* ZONE 2: CENTER — Primary Navigation (Pill Capsule) */}
-            {/* ========================================================================= */}
-            <nav
-              className="hidden lg:flex items-center bg-black/[0.04] dark:bg-black/25 p-1 rounded-full border border-black/[0.06] dark:border-white/[0.08] shadow-inner"
-              role="navigation"
-              aria-label="Primary Navigation"
-            >
+              {/* ========================================================================= */}
+              {/* ZONE 2: CENTER — Primary Navigation (Pill Capsule) */}
+              {/* ========================================================================= */}
+              <nav
+                className="hidden lg:flex items-center bg-black/[0.04] dark:bg-black/25 p-1 rounded-full border border-black/[0.06] dark:border-white/[0.08] shadow-inner"
+                role="navigation"
+                aria-label="Primary Navigation"
+              >
               {navLinks.map((link, index) => {
                 const active = isLinkActive(link.href);
                 const isHovered = hoveredNavIndex === index;
@@ -440,7 +504,8 @@ export function Navbar() {
             </div>
           </div>
         </header>
-      </div>
+        </div>
+      </motion.div>
 
       {/* ========================================================================= */}
       {/* MOBILE FULL-SCREEN GLASS DRAWER OVERLAY */}
@@ -467,6 +532,29 @@ export function Navbar() {
             <div className="absolute bottom-10 left-0 w-[260px] h-[260px] bg-[#ff5500]/10 rounded-full blur-[70px] pointer-events-none" />
 
             <nav className="flex flex-col px-6 sm:px-8 gap-4 overflow-y-auto pb-24 h-full relative z-10 custom-scrollbar">
+              {/* Mobile Drawer Brand Header */}
+              <div className="flex items-center gap-3.5 pb-4 mb-1 border-b border-black/10 dark:border-white/10">
+                <div
+                  className="relative shrink-0 flex items-center justify-center"
+                  style={{ width: "56px", height: "56px" }}
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Above and Beyond Car Detailing"
+                    width={56}
+                    height={56}
+                    className="w-14 h-14 object-contain filter drop-shadow-[0_0_12px_rgba(255,85,0,0.5)]"
+                  />
+                </div>
+                <div>
+                  <div className="font-display text-2xl font-extrabold uppercase text-zinc-900 dark:text-white leading-none">
+                    Above & Beyond
+                  </div>
+                  <div className="text-[10px] font-extrabold tracking-[0.22em] uppercase text-[#ff5500] mt-1">
+                    Car Detailing
+                  </div>
+                </div>
+              </div>
               {navLinks.map((link, i) => {
                 const active = isLinkActive(link.href);
 

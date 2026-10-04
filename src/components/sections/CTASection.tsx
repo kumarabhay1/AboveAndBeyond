@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { Phone, ShieldCheck, ArrowRight, Truck } from "lucide-react";
 
@@ -11,7 +14,13 @@ export function CTASection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#ff5500]/15 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="bg-gradient-to-br from-zinc-900 via-[#141417] to-zinc-950 border border-[#ff5500]/40 rounded-3xl p-8 sm:p-14 glass-card shadow-2xl relative overflow-hidden text-center text-white">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 40 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-gradient-to-br from-zinc-900 via-[#141417] to-zinc-950 border border-[#ff5500]/40 rounded-3xl p-8 sm:p-14 glass-card shadow-2xl relative overflow-hidden text-center text-white"
+        >
           
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#ff5500]/15 border border-[#ff5500]/30 mb-6">
             <Truck className="w-4 h-4 text-[#ff5500]" />
@@ -59,7 +68,7 @@ export function CTASection() {
             </span>
           </div>
 
-        </div>
+        </motion.div>
       </div>
     </section>
   );

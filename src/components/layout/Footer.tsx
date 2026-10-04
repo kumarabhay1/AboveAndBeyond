@@ -26,12 +26,16 @@ export function Footer() {
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="flex items-center shrink-0 group">
-              <div className="relative h-24 w-24 sm:h-28 sm:w-28 group-hover:scale-105 transition-transform">
+              <div
+                className="relative flex items-center group-hover:scale-105 transition-transform"
+                style={{ width: "112px", height: "112px", maxWidth: "100%" }}
+              >
                 <Image
                   src="/logo.png"
                   alt="Above and Beyond Car Detailing Logo"
-                  fill
-                  className="object-contain filter drop-shadow-[0_0_15px_rgba(255,85,0,0.3)]"
+                  width={112}
+                  height={112}
+                  className="w-24 h-24 sm:w-28 sm:h-28 object-contain filter drop-shadow-[0_0_15px_rgba(255,85,0,0.3)]"
                 />
               </div>
             </Link>

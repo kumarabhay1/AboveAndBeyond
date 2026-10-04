@@ -5,6 +5,7 @@ import { siteConfig } from "@/data/site";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SplashScreen } from "@/components/ui/SplashScreen";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas",
@@ -128,7 +129,7 @@ export default function RootLayout({
   return (
     <html 
       lang="en" 
-      className={`${bebasNeue.variable} ${manrope.variable} antialiased scroll-smooth`} 
+      className={`${bebasNeue.variable} ${manrope.variable} antialiased`} 
       suppressHydrationWarning
     >
       <head>
@@ -139,6 +140,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300 font-sans overflow-x-hidden selection:bg-primary selection:text-white">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <SplashScreen />
           <Navbar />
           <main className="flex-1">
             {children}
