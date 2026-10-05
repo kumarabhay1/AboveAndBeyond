@@ -307,15 +307,6 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
 *Notice:* Arrival window is requested. Owner Harbaz Hundal will contact you directly to confirm final arrival time.`;
   };
 
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateStep4()) return;
-    const msg = formatSummaryMessage();
-    const whatsappUrl = siteConfig.getWhatsAppUrl(msg);
-    window.open(whatsappUrl, "_blank");
-    setIsSubmitted(true);
-  };
-
   const handleStandardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep4()) return;
@@ -1028,30 +1019,21 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                 <button
                   type="button"
                   onClick={() => goToStep(3)}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-secondary border border-border text-foreground font-bold text-xs uppercase tracking-wider hover:bg-muted transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-secondary border border-border text-foreground font-bold text-xs uppercase tracking-wider hover:bg-muted transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Back</span>
                 </button>
 
-                <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                  <button
-                    type="button"
-                    onClick={handleWhatsAppSubmit}
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>Send via WhatsApp</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleStandardSubmit}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#ff5500] to-[#ff7733] hover:from-[#ff661a] hover:to-[#ff884d] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 shadow-xl shadow-[#ff5500]/30 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <span>Submit Appointment</span>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleStandardSubmit}
+                  className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-[#ff5500] to-[#ff7733] hover:from-[#ff661a] hover:to-[#ff884d] text-white font-extrabold text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2.5 shadow-xl shadow-[#ff5500]/35 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Submit Appointment</span>
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </button>
               </div>
             </motion.div>
           )}
@@ -1065,7 +1047,7 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
             <div className="bg-card border border-[#ff5500]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative text-center">
               <button
                 onClick={() => setIsSubmitted(false)}
-                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-full bg-secondary cursor-pointer"
+                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-full bg-secondary cursor-pointer transition-colors"
                 aria-label="Close confirmation dialog"
               >
                 <X className="w-5 h-5" />
@@ -1076,10 +1058,10 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
               </div>
 
               <h3 className="text-2xl font-display font-extrabold text-foreground uppercase">
-                Appointment Request Received!
+                Appointment Request Ready!
               </h3>
               <p className="text-muted-foreground text-xs sm:text-sm mt-2 leading-relaxed">
-                Thank you, <span className="text-[#ff5500] font-bold">{formData.name || "Valued Customer"}</span>! Owner & Lead Detailer <strong className="text-foreground">Harbaz Hundal</strong> or our dispatch team will contact you directly via <strong className="text-[#ff5500]">{notificationMethod === "whatsapp" ? "WhatsApp" : "SMS Text / Phone"}</strong> to confirm your final arrival window.
+                Thank you, <span className="text-[#ff5500] font-bold">{formData.name || "Valued Customer"}</span>! Choose how you would like to send your pre-filled booking details to owner <strong className="text-foreground">Harbaz Hundal</strong>:
               </p>
 
               <div className="mt-5 p-4 rounded-2xl bg-secondary/50 border border-border text-left text-xs space-y-1.5 text-muted-foreground">
@@ -1107,27 +1089,45 @@ function ContactFormInner({ initialServiceId }: ContactFormProps) {
                 </div>
               </div>
 
+              {/* Direct Send Actions (WhatsApp / SMS / Call) */}
               <div className="mt-5 flex flex-col gap-2.5">
+                {/* 1. Send via WhatsApp */}
                 <button
                   onClick={() => {
                     const msg = formatSummaryMessage();
                     window.open(siteConfig.getWhatsAppUrl(msg), "_blank");
                   }}
-                  className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-emerald-900/30"
+                  className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-emerald-900/30 transition-all hover:scale-[1.01] active:scale-[0.99]"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Send Direct WhatsApp Copy</span>
+                  <span>Send via WhatsApp</span>
                 </button>
+
+                {/* 2. Send via SMS Text Message */}
+                <button
+                  onClick={() => {
+                    const msg = formatSummaryMessage();
+                    window.location.href = siteConfig.getSmsUrl(msg);
+                  }}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#ff5500] to-[#ff7733] hover:from-[#ff661a] hover:to-[#ff884d] text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#ff5500]/30 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                >
+                  <Smartphone className="w-4 h-4" />
+                  <span>Send via SMS Text Message</span>
+                </button>
+
+                {/* 3. Call Harbaz Directly */}
                 <a
                   href={`tel:${siteConfig.phoneRaw}`}
-                  className="w-full py-2.5 rounded-xl bg-secondary hover:bg-muted text-foreground font-semibold text-xs flex items-center justify-center space-x-1.5 cursor-pointer border border-border"
+                  className="w-full py-2.5 rounded-xl bg-secondary hover:bg-muted text-foreground font-semibold text-xs flex items-center justify-center space-x-1.5 cursor-pointer border border-border transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#ff5500]" />
                   <span>Call Harbaz Directly: {siteConfig.phone}</span>
                 </a>
+
+                {/* Close Button */}
                 <button
                   onClick={() => setIsSubmitted(false)}
-                  className="w-full py-2 text-muted-foreground hover:text-foreground font-semibold text-xs cursor-pointer"
+                  className="w-full py-2 text-muted-foreground hover:text-foreground font-semibold text-xs cursor-pointer transition-colors"
                 >
                   Close Window
                 </button>

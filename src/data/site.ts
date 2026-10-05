@@ -28,5 +28,13 @@ export const siteConfig = {
   getWhatsAppUrl: (message?: string) => {
     const text = encodeURIComponent(message || siteConfig.whatsappPrefilledMessage);
     return `https://api.whatsapp.com/send?phone=${siteConfig.phoneRaw}&text=${text}`;
+  },
+  getSmsUrl: (message?: string) => {
+    const text = encodeURIComponent(message || siteConfig.whatsappPrefilledMessage);
+    const isIOS =
+      typeof navigator !== "undefined" &&
+      /iPad|iPhone|iPod/.test(navigator.userAgent || "");
+    const separator = isIOS ? "&" : "?";
+    return `sms:+1${siteConfig.phoneRaw.replace(/^\+?1?/, "")}${separator}body=${text}`;
   }
 };
